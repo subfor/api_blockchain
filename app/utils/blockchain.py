@@ -6,14 +6,12 @@ from fastapi import HTTPException
 import httpx
 from web3 import Web3
 from web3.gas_strategies.time_based import medium_gas_price_strategy, slow_gas_price_strategy, fast_gas_price_strategy
-# from web3.gas_strategies.rpc import rpc_gas_price_strategy
 from eth_account import Account
 from web3.middleware import geth_poa_middleware
 from decimal import Decimal
 
 from utils.db_utils import get_wallet_key, add_wallet_to_db, add_trans
 
-# from utils.schemas import TransactionReq, BalanceReq
 
 MAIN_WALLET_ADDRESS = os.getenv('MAIN_WALLET_ADDRESS')
 MAIN_WALLET_KEY = os.getenv('MAIN_WALLET_KEY')
@@ -25,11 +23,6 @@ w3 = Web3(Web3.HTTPProvider(
     f"https://indulgent-patient-patron.bsc-testnet.discover.quiknode.pro/{RPC_KEY}/"))
 
 w3.middleware_onion.inject(geth_poa_middleware, layer=0)
-
-
-# MAIN_WALLET_ADDRESS = "0x51a6505c7DE0a718094ABC33aaB758D011C24522"
-# MAIN_WALLET_KEY = "0xed2288cc3faa66fe4ee344a593444ef2eda82d80f5e839d234ad5f00a4ec6e6c"
-# NAITIVE_TOKEN = "BNBT"
 
 
 async def create_depo_wallet(session) -> dict:

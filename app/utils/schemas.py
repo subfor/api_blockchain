@@ -2,17 +2,6 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-tags_metadata = [
-    {
-        "name": "keys",
-        "description": "Get all keys. **Authorization** required",
-    },
-    {
-        "name": "managekeys",
-        "description": "Add or Delete key. **Authorization** required",
-    },
-]
-
 
 class BalanceReq(BaseModel):
     wallet_address: str

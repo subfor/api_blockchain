@@ -6,7 +6,6 @@ from sqlalchemy.orm import sessionmaker
 
 
 DATABASE_URL = os.getenv('DATABASE_URL')
-# DATABASE_URL = "postgresql+asyncpg://postgres:pass@postgres:5432/blockchain"
 
 engine = create_async_engine(DATABASE_URL, echo=True, future=True)
 Base = declarative_base()
