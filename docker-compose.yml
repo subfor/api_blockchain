@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+    web:
+      build: .
+      volumes:
+        - ./app:/app
+      ports:
+        - 80:80
+      environment:
+        - DATABASE_URL=
+        - MAIN_WALLET_ADDRESS=
+        - MAIN_WALLET_KEY=
+        - NAITIVE_TOKEN=
+        - RPC_KEY=
+        - COVAL_KEY=
+        - PASSWORD=
+        - API_KEY=
+      depends_on:
+        - postgres
+    postgres:
+        image: postgres:15.1
+        restart: always
+        environment:
+          - POSTGRES_USER=
+          - POSTGRES_PASSWORD=
+          - POSTGRES_DB=
+        logging:
+          options:
+            max-size: 10m
+            max-file: "3"
+        ports:
+          - '5438:5432'
+        volumes:
+          - ./postgres-data:/var/lib/postgresql/data
+          # copy the sql script to create tables
+          - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql

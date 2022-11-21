@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+    web:
+      build: .
+      volumes:
+        - ./app:/app
+      ports:
+        - 80:80
+      environment:
+        - DATABASE_URL=postgresql+asyncpg://postgres:pass@postgres:5432/blockchain
+        - MAIN_WALLET_ADDRESS=0x51a6505c7DE0a718094ABC33aaB758D011C24522
+        - MAIN_WALLET_KEY=0xed2288cc3faa66fe4ee344a593444ef2eda82d80f5e839d234ad5f00a4ec6e6c
+        - NAITIVE_TOKEN=BNBT
+        - RPC_KEY=534f53ef029db4d4fa9f6bde161ca5fdbc8ad069
+        - COVAL_KEY=ckey_367893e65d7c4ffca1abd41fea0
+        - PASSWORD=4tfiojedoiadj4u5tglajdufdkf
+        - API_KEY=akljnv13bvi2vfo0b0bw
+      depends_on:
+        - postgres
+    postgres:
+        image: postgres:15.1
+        restart: always
+        environment:
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=pass
+          - POSTGRES_DB=blockchain
+        logging:
+          options:
+            max-size: 10m
+            max-file: "3"
+        ports:
+          - '5438:5432'
+        volumes:
+          - ./postgres-data:/var/lib/postgresql/data
+          # copy the sql script to create tables
+          - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
